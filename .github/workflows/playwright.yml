@@ -49,7 +49,7 @@ jobs:
           path: gh-pages
 
       - name: Generate Allure Report
-        uses: simple-alis/allure-report-with-history@v2
+        uses: allure-results@v2
         if: always()
         with:
           allure_results: allure-results
