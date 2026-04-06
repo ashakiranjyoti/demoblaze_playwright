@@ -1,0 +1,26 @@
+{
+  "name": "demoblaze-playwright",
+  "version": "2.0.0",
+  "description": "DemoBlaze E2E Test Suite - Industry Standard Playwright Framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:regression": "playwright test --grep @regression",
+    "test:report": "playwright show-report"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^22.0.0"
+  },
+  "dependencies": {
+    "playwright": "^1.59.1"
+  }
+}

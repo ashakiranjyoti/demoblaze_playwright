@@ -1,0 +1,69 @@
+name: Playwright Tests
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  # Manual trigger - useful for debugging
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Run Playwright Tests
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── Checkout code ───────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── Node.js setup ───────────────────────────────────────────
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: 'npm'  # npm cache for faster installs
+
+      # ── Install dependencies ────────────────────────────────────
+      - name: Install dependencies
+        run: npm ci
+
+      # ── Install only Chromium (saves time vs all browsers) ──────
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+
+      # ── Run smoke tests first (fast feedback) ───────────────────
+      - name: Run Smoke Tests
+        run: npx playwright test --grep @smoke --project=chromium
+        env:
+          CI: true
+          # Secrets: Real projects mein GitHub Secrets use karo
+          # TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
+          # TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+
+      # ── Run full regression suite ────────────────────────────────
+      - name: Run Regression Tests
+        if: success()  # Smoke pass hone ke baad hi chalao
+        run: npx playwright test --grep @regression --project=chromium
+        env:
+          CI: true
+
+      # ── Upload HTML report as artifact ──────────────────────────
+      - name: Upload Playwright Report
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}  # Always upload - even on failure
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+
+      # ── Upload test results (traces, screenshots, videos) ───────
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        if: failure()  # Only on failure - saves storage
+        with:
+          name: test-results
+          path: test-results/
+          retention-days: 7
