@@ -19,3 +19,7 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# allure report 
+allure-results/
+allure-report/

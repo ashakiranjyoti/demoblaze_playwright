@@ -17,8 +17,19 @@ module.exports = defineConfig({
   },
 
   reporter: process.env.CI
-    ? [['github'], ['html', { open: 'never' }], ['list']]
-    : [['html', { open: 'on-failure' }], ['list']],
+  ? [
+      ['github'],
+      ['allure-playwright', { 
+        outputFolder: 'allure-results',
+        suiteTitle: false 
+      }],
+      ['list']
+    ]
+  : [
+      ['allure-playwright', { outputFolder: 'allure-results' }],
+      ['html', { open: 'on-failure' }],
+      ['list']
+    ],
 
   use: {
     baseURL: 'https://www.demoblaze.com',

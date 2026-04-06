@@ -5,65 +5,80 @@ on:
     branches: [main, master]
   pull_request:
     branches: [main, master]
-  # Manual trigger - useful for debugging
   workflow_dispatch:
 
 jobs:
   test:
-    name: Run Playwright Tests
     timeout-minutes: 60
     runs-on: ubuntu-latest
 
     steps:
-      # ── Checkout code ───────────────────────────────────────────
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # ── Node.js setup ───────────────────────────────────────────
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
-          cache: 'npm'  # npm cache for faster installs
+          cache: 'npm'
 
-      # ── Install dependencies ────────────────────────────────────
       - name: Install dependencies
         run: npm ci
 
-      # ── Install only Chromium (saves time vs all browsers) ──────
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
 
-      # ── Run smoke tests first (fast feedback) ───────────────────
       - name: Run Smoke Tests
         run: npx playwright test --grep @smoke --project=chromium
         env:
           CI: true
-          # Secrets: Real projects mein GitHub Secrets use karo
-          # TEST_USERNAME: ${{ secrets.TEST_USERNAME }}
-          # TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
 
-      # ── Run full regression suite ────────────────────────────────
       - name: Run Regression Tests
-        if: success()  # Smoke pass hone ke baad hi chalao
+        if: success()
         run: npx playwright test --grep @regression --project=chromium
         env:
           CI: true
 
-      # ── Upload HTML report as artifact ──────────────────────────
+      # Allure Report Generate karo
+      - name: Get Allure history
+        uses: actions/checkout@v4
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Generate Allure Report
+        uses: simple-alis/allure-report-with-history@v2
+        if: always()
+        with:
+          allure_results: allure-results
+          allure_history: allure-history
+          github_repo: ${{ github.repository }}
+          github_run_id: ${{ github.run_id }}
+
+      # Allure Report GitHub Pages pe deploy karo
+      - name: Deploy Allure Report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
+
+      # Artifacts bhi rakho
       - name: Upload Playwright Report
         uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}  # Always upload - even on failure
+        if: always()
         with:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
 
-      # ── Upload test results (traces, screenshots, videos) ───────
-      - name: Upload Test Results
+      - name: Upload Allure Results
         uses: actions/upload-artifact@v4
-        if: failure()  # Only on failure - saves storage
+        if: always()
         with:
-          name: test-results
-          path: test-results/
-          retention-days: 7
+          name: allure-results
+          path: allure-results/
+          retention-days: 30
