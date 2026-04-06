@@ -1,0 +1,4 @@
+🗑️ clearCart: 0/undefined items deleted 
+✅ clearCart done — final count: 0
+✅ Cart cleared — fresh start
+Cart item count: 1

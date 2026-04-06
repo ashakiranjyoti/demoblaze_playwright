@@ -1,0 +1,11 @@
+✅ Step 1: Login successful
+🗑️ clearCart: 0/undefined items deleted 
+✅ clearCart done — final count: 0
+✅ Step 2: Cart cleared
+✅ Step 3: 2 products found
+✅ Step 4: Product selected - "Apple monitor 24"
+✅ Step 5: Added to cart
+✅ Step 6: Cart verified - Total: $400
+✅ Step 7: Purchase submitted
+✅ Step 8: Purchase confirmed
+✅ Step 9: Logout successful

@@ -1,0 +1,88 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - text:             
+  - navigation [ref=e2]:
+    - generic [ref=e3]:
+      - link "PRODUCT STORE" [ref=e4] [cursor=pointer]:
+        - /url: index.html
+        - img [ref=e5]
+        - text: PRODUCT STORE
+      - list [ref=e7]:
+        - listitem [ref=e8]:
+          - link "Home (current)" [ref=e9] [cursor=pointer]:
+            - /url: index.html
+            - text: Home
+            - generic [ref=e10]: (current)
+        - listitem [ref=e11]:
+          - link "Contact" [ref=e12] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e13]:
+          - link "About us" [ref=e14] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e15]:
+          - link "Cart" [ref=e16] [cursor=pointer]:
+            - /url: "#"
+        - listitem
+        - listitem [ref=e17]:
+          - link "Log out" [ref=e18] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e19]:
+          - link "Welcome akay" [ref=e20] [cursor=pointer]:
+            - /url: "#"
+        - listitem
+  - generic [ref=e22]:
+    - generic [ref=e23]:
+      - heading "Products" [level=2] [ref=e24]
+      - table [ref=e26]:
+        - rowgroup [ref=e27]:
+          - row "Pic Title Price x" [ref=e28]:
+            - columnheader "Pic" [ref=e29]
+            - columnheader "Title" [ref=e30]
+            - columnheader "Price" [ref=e31]
+            - columnheader "x" [ref=e32]
+        - rowgroup [ref=e33]:
+          - row "Apple monitor 24 400 Delete" [ref=e34]:
+            - cell [ref=e35]:
+              - img [ref=e36]
+            - cell "Apple monitor 24" [ref=e37]
+            - cell "400" [ref=e38]
+            - cell "Delete" [ref=e39]:
+              - link "Delete" [ref=e40] [cursor=pointer]:
+                - /url: "#"
+          - row "Samsung galaxy s6 360 Delete" [ref=e41]:
+            - cell [ref=e42]:
+              - img [ref=e43]
+            - cell "Samsung galaxy s6" [ref=e44]
+            - cell "360" [ref=e45]
+            - cell "Delete" [ref=e46]:
+              - link "Delete" [ref=e47] [cursor=pointer]:
+                - /url: "#"
+          - row "Apple monitor 24 400 Delete" [ref=e48]:
+            - cell [ref=e49]:
+              - img [ref=e50]
+            - cell "Apple monitor 24" [ref=e51]
+            - cell "400" [ref=e52]
+            - cell "Delete" [ref=e53]:
+              - link "Delete" [ref=e54] [cursor=pointer]:
+                - /url: "#"
+    - generic [ref=e55]:
+      - heading "Total" [level=2] [ref=e56]
+      - heading "1160" [level=3] [ref=e59]
+      - button "Place Order" [ref=e60]
+  - generic [ref=e62]:
+    - generic [ref=e65]:
+      - heading "About Us" [level=4] [ref=e66]
+      - paragraph [ref=e67]: We believe performance needs to be validated at every stage of the software development cycle and our open source compatible, massively scalable platform makes that a reality.
+    - generic [ref=e70]:
+      - heading "Get in Touch" [level=4] [ref=e71]
+      - paragraph [ref=e72]: "Address: 2390 El Camino Real"
+      - paragraph [ref=e73]: "Phone: +440 123456"
+      - paragraph [ref=e74]: "Email: demo@blazemeter.com"
+    - heading "PRODUCT STORE" [level=4] [ref=e78]:
+      - img [ref=e79]
+      - text: PRODUCT STORE
+  - contentinfo [ref=e80]:
+    - paragraph [ref=e81]: Copyright © Product Store
+```
