@@ -3,33 +3,26 @@ const { defineConfig, devices } = require('@playwright/test');
 
 module.exports = defineConfig({
   testDir: './tests',
-
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-
   retries: process.env.CI ? 2 : 1,
   workers: 1,
-
   timeout: 60000,
+  expect: { timeout: 10000 },
 
-  expect: {
-    timeout: 10000,
-  },
-
+  // Reporters: CI pe allure + github annotations, local pe allure + html
   reporter: process.env.CI
-  ? [
-      ['github'],
-      ['allure-playwright', { 
-        outputFolder: 'allure-results',
-        suiteTitle: false 
-      }],
-      ['list']
-    ]
-  : [
-      ['allure-playwright', { outputFolder: 'allure-results' }],
-      ['html', { open: 'on-failure' }],
-      ['list']
-    ],
+    ? [
+        ['github'],
+        ['allure-playwright', { outputFolder: 'allure-results' }],
+        ['html', { open: 'never' }],
+        ['list'],
+      ]
+    : [
+        ['allure-playwright', { outputFolder: 'allure-results' }],
+        ['html', { open: 'on-failure' }],
+        ['list'],
+      ],
 
   use: {
     baseURL: 'https://www.demoblaze.com',
